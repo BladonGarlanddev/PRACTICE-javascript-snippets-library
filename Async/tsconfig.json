@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // or ES2015, ES2017, etc.
+    "lib": ["esnext", "DOM"], // This includes necessary modern libraries
+    "module": "esnext",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  }
+}
