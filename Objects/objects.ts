@@ -1,53 +1,48 @@
-interface task {
+interface Task {
     id: number,
     description: string,
-    completed: boolean
+    completed?: boolean
 }
 
-interface taskExtended extends task {
+interface TaskExtended extends Task {
     dueDate: Date
 }
 
-let todoList:task[] = []
-let currentId:number = 0
 
-function createTaskObject(id:number, description:string, completed:boolean) {
-    todoList.push({id: currentId++, description: description, completed: completed})
+function addNewProperty(task:Task, dueDate: Date) {
+  // Add a new property called 'dueDate' to the task object.
+    let newTask:TaskExtended = {...task, dueDate: dueDate}
 }
 
-function accessTaskProperties(task:task) {
-    console.log(`Descripton: ${task.description}`)
-    console.log(`Completed: ${task.completed}`);
+function deleteTaskProperty(task:Task) {
+    let newTask = task
+    delete newTask.completed
+    return newTask
 }
 
-function addNewProperty(task:task, dueDate:Date) {
-    let taskWithNewProperty:taskExtended = {...task, dueDate: dueDate}
-    return taskWithNewProperty
-}
-
-function deleteTaskProperty(task:task, property: keyof task) {
-    delete task[property]
-    return task
-}
-
-function checkPropertyExistence(task:task, property: keyof task):boolean {
-    return property in task
-}
-
-function loopThroughTaskProperties(task) {
-    for (let property in task) { 
-        console.log(`Property: ${property}`)
+function checkPropertyExistence(task:Task) {
+  // Check if 'dueDate' exists in the task object.
+    if ('dueDate' in task) {
+        return true
+    } else {
+        return false
     }
 }
 
-function destructureTask(task:task) {
-  let { id, description, completed} = task
+function loopThroughTaskProperties(task:Task) {
+  // Loop through all properties of the task object and print their keys and values.
+    for(let property in task) {
+        console.log("Property: " + property)
+    }
 }
 
-function cloneTask(task:task) {
+function destructureTask(task:Task) {
+    let {id, description, completed} = task
+}
+
+function cloneTask(task:Task) {
   // Create a deep copy of the task object.
-  let deepCopy:task = JSON.parse(JSON.stringify(task))
-  return deepCopy
+    let deepCopy = JSON.parse(JSON.stringify(task))
 }
 
 function mergeTaskObjects(task1, task2) {
@@ -62,10 +57,9 @@ function getObjectKeysValuesEntries(task) {
   // Use Object.keys(), Object.values(), and Object.entries() on the task object.
 }
 
-function addMethodToTask(task:task) {
+function addMethodToTask(task:Task) {
   // Add a method to the task object that toggles the 'completed' status using 'this'.
-    let newTask = cloneTask(task) as any
-    newTask.toggleCompleted = function() {
+    task.toggleCompleted = function() {
         this.completed = !this.completed
     }
 }
